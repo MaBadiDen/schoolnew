@@ -48,8 +48,11 @@ public class StudentController {
         }
         return ResponseEntity.ok(foundStudent);
     }
-    @GetMapping("/filter/{age}")
-    public Collection<Student> filterByAge(@PathVariable int age) {
-        return studentService.filterByAge(age);
+    @GetMapping("/filter")
+    public Collection<Student> filterByAge(@RequestParam(required = true) int min,
+                                           @RequestParam(required = true) int max) {
+        return studentService.filterByAge(min, max);
     }
+
+
 }

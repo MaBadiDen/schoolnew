@@ -50,7 +50,14 @@ public class FacultyController {
         return ResponseEntity.ok(foundFaculty);
     }
     @GetMapping("/filter")
-    public Collection<Faculty> filterByAge(@RequestParam("color") String color) {
-        return facultyService.filterByAge(color);
+    public Collection<Faculty> filterByAge(@RequestParam(value = "name", required = false) String name,
+                                           @RequestParam(value = "color", required = false) String color) {
+        if (name != null && !name.isBlank()) {
+            return facultyService.filterFacByName(name);
+        }
+        if (color != null && !color.isBlank()) {
+            return facultyService.filterFacByColor(color);
+        }
+        return facultyService.getAllFac();
     }
 }

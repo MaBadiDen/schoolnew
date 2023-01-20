@@ -33,9 +33,14 @@ public class FacultyService {
         return facultyRepository.save(faculty);
     }
 
-    public Collection<Faculty> filterByAge(String color) {
-        return facultyRepository.findAll().stream()
-                .filter(faculty -> faculty.getColor().equals(color))
-                .collect(Collectors.toList());
+    public Collection<Faculty> filterFacByName(String name) {
+        return facultyRepository.findFacultiesByNameContainsIgnoreCase(name);
+    }
+    public Collection<Faculty> filterFacByColor(String color) {
+        return facultyRepository.findFacultiesByColorContainsIgnoreCase(color);
+    }
+
+    public Collection<Faculty> getAllFac() {
+        return facultyRepository.findAll();
     }
 }
