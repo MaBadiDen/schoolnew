@@ -18,6 +18,7 @@ public class Student {
     private Faculty faculty;
 
 
+
     public Long getId() {
         return id;
     }

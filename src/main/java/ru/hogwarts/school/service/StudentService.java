@@ -7,6 +7,7 @@ import ru.hogwarts.school.model.Student;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.repositories.StudentRepository;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 
 import java.util.stream.Collectors;

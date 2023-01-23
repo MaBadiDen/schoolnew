@@ -1,13 +1,25 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+
+import org.springframework.web.multipart.MultipartFile;
+import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.StudentService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collection;
 
 @RestController
@@ -17,9 +29,10 @@ public class StudentController {
 
 
     private final StudentService studentService;
-
-    public StudentController(StudentService studentService) {
+    private final AvatarService avatarService;
+    public StudentController(StudentService studentService, AvatarService avatarService) {
         this.studentService = studentService;
+        this.avatarService = avatarService;
     }
     @PostMapping
     public Student addStudent(@RequestBody Student student) {
@@ -56,6 +69,11 @@ public class StudentController {
     public Faculty getStudentFaculty(@PathVariable Long id) {
         return studentService.getStudentFaculty(id);
     }
+
+
+
+
+
 
 
 }
