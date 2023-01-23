@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
 
 
@@ -29,35 +30,26 @@ public class FacultyController {
     @GetMapping("/{id}")
     public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
         Faculty faculty = facultyService.getFaculty(id);
-        if(faculty == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(faculty);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deleteFaculty(@PathVariable Long id) {
+    public ResponseEntity<Faculty> deleteFaculty(@PathVariable Long id) {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping
-    public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
-        Faculty foundFaculty = facultyService.editFaculty(faculty);
-        if(faculty == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+    @PutMapping("{id}")
+    public ResponseEntity<Faculty> editFaculty(@PathVariable Long id, @RequestBody Faculty faculty) {
+        Faculty foundFaculty = facultyService.editFaculty(id, faculty);
         return ResponseEntity.ok(foundFaculty);
     }
     @GetMapping("/filter")
-    public Collection<Faculty> filterByAge(@RequestParam(value = "name", required = false) String name,
-                                           @RequestParam(value = "color", required = false) String color) {
-        if (name != null && !name.isBlank()) {
-            return facultyService.filterFacByName(name);
-        }
-        if (color != null && !color.isBlank()) {
-            return facultyService.filterFacByColor(color);
-        }
-        return facultyService.getAllFac();
+    public Collection<Faculty> filterByAge(@RequestParam(required = true) String nameOrColor) {
+        return facultyService.filterFacByNameOrColor(nameOrColor);
+    }
+    @GetMapping("{id}/students")
+    public Collection<Student> getFacStudents(@PathVariable Long id) {
+        return facultyService.getStudentsByFacId(id);
     }
 }

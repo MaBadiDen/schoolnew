@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Student {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     private String name;
     private int age;
 
@@ -18,11 +18,19 @@ public class Student {
     private Faculty faculty;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
 
