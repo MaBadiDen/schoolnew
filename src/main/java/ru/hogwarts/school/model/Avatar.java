@@ -23,7 +23,7 @@ public class Avatar {
         this.student = student;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Student student;
 
 

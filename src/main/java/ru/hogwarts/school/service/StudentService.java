@@ -2,22 +2,25 @@ package ru.hogwarts.school.service;
 
 
 import ru.hogwarts.school.exceptions.StudentNotFoundException;
+import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.repositories.AvatarRepository;
 import ru.hogwarts.school.repositories.StudentRepository;
 
-import javax.transaction.Transactional;
 import java.util.Collection;
-
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
+    private final AvatarRepository avatarRepository;
 
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, AvatarRepository avatarRepository) {
         this.studentRepository = studentRepository;
+        this.avatarRepository = avatarRepository;
     }
 
     public Student addStudent(Student student) {
@@ -46,5 +49,16 @@ public class StudentService {
 
     public Faculty getStudentFaculty(long id) {
         return getStudent(id).getFaculty();
+    }
+
+    public Long getSumOfStudents() {
+        return studentRepository.getAmountOfStudents();
+    }
+
+    public Double getAvgOfAge() {
+        return studentRepository.getAverageAgeOfStudents();
+    }
+    public List<Student> getLast5Students() {
+        return studentRepository.getLastFiveStudents();
     }
 }
