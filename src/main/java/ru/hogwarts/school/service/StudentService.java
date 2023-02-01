@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.repositories.AvatarRepository;
 import ru.hogwarts.school.repositories.StudentRepository;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -31,9 +32,10 @@ public class StudentService {
         return studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
     }
 
+    @Transactional
     public void deleteStudent(long id) {
         getStudent(id);
-        studentRepository.deleteById(id);
+        avatarRepository.deleteAvatarByStudentId(id);
     }
 
     public Student editStudent(long id, Student student) {
